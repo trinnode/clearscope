@@ -1,0 +1,113 @@
+// ClearScope Disclosure Request Contract
+// Manages the public lifecycle of disclosure requests.
+// Public ledger state: request records (request_id, policy_id, params_hash,
+//                       requester, expiry, status)
+// Private state: never touches credential attributes
+
+pragma language_version 0.25;
+
+import CompactStandardLibrary;
+import { PolicyResult } from PolicyResultModule;
+
+enum RequestStatus {
+  PENDING,
+  RESPONDED,
+  EXPIRED
+}
+
+struct DisclosureRequestRecord {
+  requestId: Bytes<32>,
+  policyId: Bytes<32>,
+  policyVersion: Bytes<16>,
+  paramsHash: Bytes<32>,
+  requester: Bytes<32>,
+  expiry: Uint<64>,
+  status: RequestStatus
+}
+
+export ledger requests: Map<Bytes<32>, DisclosureRequestRecord>;
+export ledger requestCount: Counter;
+
+constructor() {
+  // Initialize with empty state
+}
+
+export circuit createRequest(
+  requestId: Bytes<32>,
+  policyId: Bytes<32>,
+  policyVersion: Bytes<16>,
+  paramsHash: Bytes<32>,
+  requester: Bytes<32>,
+  expiry: Uint<64>
+): [] {
+  // Validate inputs
+  assert(expiry > 0, "Expiry must be positive");
+  assert(policyId != pad(32, ""), "Policy ID cannot be empty");
+
+  // Create the request record
+  const record = DisclosureRequestRecord {
+    requestId: disclose(requestId),
+    policyId: disclose(policyId),
+    policyVersion: disclose(policyVersion),
+    paramsHash: disclose(paramsHash),
+    requester: disclose(requester),
+    expiry: disclose(expiry),
+    status: RequestStatus.PENDING
+  };
+
+  // Store in public ledger
+  requests.insert(disclose(requestId), record);
+  requestCount.increment(1);
+}
+
+export circuit respondToRequest(
+  requestId: Bytes<32>,
+  result: PolicyResult
+): PolicyResult {
+  // Look up the request
+  const record = requests.lookup(disclose(requestId));
+  assert(record != default<DisclosureRequestRecord>, "Request not found");
+
+  // Check status
+  assert(record.status == RequestStatus.PENDING, "Request already responded to or expired");
+
+  // Check expiry against current time
+  // Note: In production, use block timestamp from the kernel
+  // For now, we rely on the caller to check expiry
+
+  // Update status to RESPONDED
+  const updatedRecord = DisclosureRequestRecord {
+    requestId: disclose(record.requestId),
+    policyId: disclose(record.policyId),
+    policyVersion: disclose(record.policyVersion),
+    paramsHash: disclose(record.paramsHash),
+    requester: disclose(record.requester),
+    expiry: disclose(record.expiry),
+    status: RequestStatus.RESPONDED
+  };
+
+  requests.insert(disclose(requestId), updatedRecord);
+
+  // Return the result (this is the only thing committed to public state)
+  return disclose(result);
+}
+
+export circuit getRequest(
+  requestId: Bytes<32>
+): DisclosureRequestRecord {
+  const record = requests.lookup(disclose(requestId));
+  assert(record != default<DisclosureRequestRecord>, "Request not found");
+  return record;
+}
+
+export circuit isExpired(
+  requestId: Bytes<32>
+): Boolean {
+  const record = requests.lookup(disclose(requestId));
+  if (record == default<DisclosureRequestRecord>) {
+    return true;
+  }
+  // In production, compare against block timestamp from kernel
+  // For now, return the stored status check
+  return record.status == RequestStatus.EXPIRED;
+}

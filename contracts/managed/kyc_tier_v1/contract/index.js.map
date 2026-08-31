@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "../../../",
+  "sources": ["policies/kyc_tier_v1.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EAyBA;;;;;;;;;;;;;MAMA,AAAA,eAyBC;;;;;cAxBC,aAAoB;;;;;;;;;;;;;;;;;;yCAApB,aAAoB;;;;;;;;;uDAApB,aAAoB;;;;OAwBrB;;;;GA5BA;EAHD;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAHA;;;;;;;;;yEAAkC;IAClC;;;;;;;;;yEAAuC;IAGrC;;;;;;;;;yEAAQ;IACR;;;;;;;;;yEAAa;;;;;;;GACd;EATD,AAAA,gBAAiC;;0DAAjC,aAAiC;;;;;;;;;;;;;;GAAA;EAYjC,AAAA,wBAyBC,4BAxBC,aAAoB;UAGd,cAA6D,GAArC,aAAW,UAAS,aAAW;QACzD,cAAY;;;YAKV,MAAsB;YAGtB,WAA4C,GAAvB,MAAI,UAAS,MAAI;UACxC,WAAS;;;cAKP,cAA4C,GAApB,MAAI,IAAI,aAAW;YAC7C,cAAY;;;GAKjB;;;;;;;;;;;;;;;;IAlCD;qCAAA;;;;;;;;;;;0GAAkC;KAAA;IAClC;qCAAA;;;;;;;;;;;0GAAuC;KAAA;;;;;;;;;;;;"
+}

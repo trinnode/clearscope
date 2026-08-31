@@ -1,0 +1,69 @@
+// ClearScope Policy Registry Contract
+// Manages the registration and versioning of disclosure policies.
+// Policies are registered on-chain with their IDs, versions, and hashes.
+
+pragma language_version 0.25;
+
+import CompactStandardLibrary;
+
+struct PolicyRegistration {
+  policyId: Bytes<32>,
+  name: Bytes<64>,
+  version: Bytes<16>,
+  logicHash: Bytes<32>,
+  compactSource: Bytes<128>
+}
+
+export ledger registeredPolicies: Map<Bytes<32>, PolicyRegistration>;
+export ledger policyCount: Counter;
+export ledger registryAuthority: Bytes<32>;
+
+constructor(authority: Bytes<32>) {
+  registryAuthority = disclose(authority);
+}
+
+export circuit registerPolicy(
+  policyId: Bytes<32>,
+  name: Bytes<64>,
+  version: Bytes<16>,
+  logicHash: Bytes<32>,
+  compactSource: Bytes<128>
+): [] {
+  // Only the authority can register policies
+  // In production, verify caller identity via witness
+  const caller = witnessCaller();
+  assert(caller == registryAuthority, "Only authority can register policies");
+
+  // Check if policy already exists
+  const existing = registeredPolicies.lookup(disclose(policyId));
+  assert(existing == default<PolicyRegistration>, "Policy already registered");
+
+  const registration = PolicyRegistration {
+    policyId: disclose(policyId),
+    name: disclose(name),
+    version: disclose(version),
+    logicHash: disclose(logicHash),
+    compactSource: disclose(compactSource)
+  };
+
+  registeredPolicies.insert(disclose(policyId), registration);
+  policyCount.increment(1);
+}
+
+export circuit getPolicy(
+  policyId: Bytes<32>
+): PolicyRegistration {
+  const registration = registeredPolicies.lookup(disclose(policyId));
+  assert(registration != default<PolicyRegistration>, "Policy not found");
+  return registration;
+}
+
+export circuit isRegistered(
+  policyId: Bytes<32>
+): Boolean {
+  const registration = registeredPolicies.lookup(disclose(policyId));
+  return registration != default<PolicyRegistration>;
+}
+
+// Witness to get the caller's identity
+witness witnessCaller(): Bytes<32>;

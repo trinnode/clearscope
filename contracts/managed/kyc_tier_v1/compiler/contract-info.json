@@ -1,0 +1,65 @@
+{
+  "compiler-version": "0.33.0",
+  "language-version": "0.25.0",
+  "runtime-version": "0.18.0-rc.1",
+  "circuits": [
+    {
+      "name": "evaluateKYCTier",
+      "pure": false,
+      "proof": false,
+      "arguments": [
+        {
+          "name": "minimumTier",
+          "type": {
+            "type-name": "Uint",
+            "maxval": 255
+          }
+        }
+      ],
+      "result-type": {
+        "type-name": "Enum",
+        "name": "PolicyResult",
+        "elements": [
+          "PASS",
+          "FAIL",
+          "INSUFFICIENT_SCOPE"
+        ]
+      }
+    }
+  ],
+  "witnesses": [
+    {
+      "name": "holderKYCTier",
+      "arguments": [
+      ],
+      "result type": {
+        "type-name": "Uint",
+        "maxval": 255
+      }
+    }
+  ],
+  "contracts": [
+  ],
+  "ledger": [
+    {
+      "name": "policyId",
+      "index": 0,
+      "exported": true,
+      "storage": "Cell",
+      "type": {
+        "type-name": "Bytes",
+        "length": 32
+      }
+    },
+    {
+      "name": "policyVersion",
+      "index": 1,
+      "exported": true,
+      "storage": "Cell",
+      "type": {
+        "type-name": "Bytes",
+        "length": 16
+      }
+    }
+  ]
+}

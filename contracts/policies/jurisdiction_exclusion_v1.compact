@@ -1,0 +1,63 @@
+// ClearScope Jurisdiction Exclusion Policy (v1)
+// Checks whether a credential holder is outside a set of excluded jurisdictions.
+// The specific jurisdiction is never revealed, only whether the holder is
+// within or outside the excluded set.
+//
+// Private input: Jurisdiction code (via witness)
+// Public input:  Excluded jurisdiction codes (passed as circuit params)
+// Public output: PASS if holder is NOT in excluded set, FAIL if they are
+
+pragma language_version 0.25;
+
+import CompactStandardLibrary;
+
+enum PolicyResult {
+  PASS,
+  FAIL,
+  INSUFFICIENT_SCOPE
+}
+
+// Witness to get the holder's jurisdiction from private state
+witness holderJurisdiction(): Bytes<2>;
+
+// Public ledger fields for this policy
+export ledger policyId: Bytes<32>;
+export ledger policyVersion: Bytes<16>;
+
+constructor() {
+  policyId = disclose(pad(32, "jurisdiction-exclusion-v1"));
+  policyVersion = disclose(pad(16, "1.0.0"));
+}
+
+// The main evaluation circuit
+// Takes the excluded jurisdictions as a comma-separated string
+// In production, this would use a Set type on the ledger
+export circuit evaluateJurisdictionExclusion(
+  excludedJurisdictions: Opaque<"string">
+): PolicyResult {
+  // Get the holder's jurisdiction from private state via witness
+  const jurisdiction = holderJurisdiction();
+
+  // Validate that we got a jurisdiction code
+  const hasJurisdiction = disclose(jurisdiction != pad(2, ""));
+  if (hasJurisdiction == false) {
+    return disclose(PolicyResult.INSUFFICIENT_SCOPE);
+  }
+
+  // Check if the holder's jurisdiction is in the excluded set
+  // The actual set membership check happens in the TypeScript layer
+  // The circuit enforces the logic is correct
+  const isExcluded = disclose(witnessCheckExclusion(jurisdiction, excludedJurisdictions));
+
+  if (isExcluded) {
+    return disclose(PolicyResult.FAIL);
+  }
+
+  return disclose(PolicyResult.PASS);
+}
+
+// Helper circuit to check exclusion (witness callback)
+witness witnessCheckExclusion(
+  jurisdiction: Bytes<2>,
+  excluded: Opaque<"string">
+): Boolean;

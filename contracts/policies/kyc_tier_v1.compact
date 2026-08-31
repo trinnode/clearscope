@@ -1,0 +1,57 @@
+// ClearScope KYC Tier Policy (v1)
+// Checks whether a credential holder meets or exceeds a specified KYC tier level.
+// The tier value itself is never disclosed, only the pass or fail result.
+//
+// Private input: KYC tier value (via witness)
+// Public input:  Minimum tier N (Uint<8>)
+// Public output: PASS if holder tier >= N, FAIL otherwise
+
+pragma language_version 0.25;
+
+import CompactStandardLibrary;
+
+enum PolicyResult {
+  PASS,
+  FAIL,
+  INSUFFICIENT_SCOPE
+}
+
+// Witness to get the holder's KYC tier from private state
+witness holderKYCTier(): Uint<8>;
+
+// Public ledger fields for this policy
+export ledger policyId: Bytes<32>;
+export ledger policyVersion: Bytes<16>;
+
+constructor() {
+  policyId = disclose(pad(32, "kyc-tier-v1"));
+  policyVersion = disclose(pad(16, "1.0.0"));
+}
+
+// The main evaluation circuit
+export circuit evaluateKYCTier(
+  minimumTier: Uint<8>
+): PolicyResult {
+  // Validate the minimum tier parameter
+  const minTierValid = disclose(minimumTier >= 1 && minimumTier <= 4);
+  if (minTierValid == false) {
+    return disclose(PolicyResult.INSUFFICIENT_SCOPE);
+  }
+
+  // Get the tier from private state via witness
+  const tier = holderKYCTier();
+
+  // Validate that we got a tier
+  const tierValid = disclose(tier >= 1 && tier <= 4);
+  if (tierValid == false) {
+    return disclose(PolicyResult.INSUFFICIENT_SCOPE);
+  }
+
+  // Check if holder tier meets or exceeds minimum
+  const meetsMinimum = disclose(tier >= minimumTier);
+  if (meetsMinimum) {
+    return disclose(PolicyResult.PASS);
+  }
+
+  return disclose(PolicyResult.FAIL);
+}

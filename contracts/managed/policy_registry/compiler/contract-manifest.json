@@ -1,0 +1,98 @@
+{
+  "manifest-version": "1",
+  "compiler-version": "0.33.0",
+  "language-version": "0.25.0",
+  "runtime-version": "0.18.0-rc.1",
+  "compiler": {
+    "type": "directory",
+    "contract-info.json": {
+      "type": "file",
+      "size": 4140,
+      "hash": "d7547f0ecac29b0aba095075c88668e61091f5e51939ba6440cc3a109946e2b2"
+    }
+  },
+  "contract": {
+    "type": "directory",
+    "index.d.ts": {
+      "type": "file",
+      "size": 5853,
+      "hash": "94e82f2fa4c553a0a1bd5d191c0920ea0192f88442c526b3f476530b1d1d334f"
+    },
+    "index.js": {
+      "type": "file",
+      "size": 47486,
+      "hash": "3552ecb46f02f5d3795334222e350021b583d3ddac78afbd5a61f522bc2d433d"
+    },
+    "index.js.map": {
+      "type": "file",
+      "size": 1841,
+      "hash": "09b0fdb3668032beb27307d9dcb94599506a6897e7bf685378aa750008210e38"
+    }
+  },
+  "zkir": {
+    "type": "directory",
+    "getPolicy.bzkir": {
+      "type": "file",
+      "size": 278,
+      "hash": "0258dd78f1d6e402d17f00df75ca7a90a4f8560da60f292df7fd5d511e49255d"
+    },
+    "getPolicy.zkir": {
+      "type": "file",
+      "size": 4543,
+      "hash": "a63549a46e991c5731e645745b52807aec30fc4687c29e329607a4ad868b7eb2"
+    },
+    "isRegistered.bzkir": {
+      "type": "file",
+      "size": 252,
+      "hash": "3d46562983a18ce204d33b3af7123a9b2267e59d87fe8eb05cf5f2d4424d8c7c"
+    },
+    "isRegistered.zkir": {
+      "type": "file",
+      "size": 4090,
+      "hash": "6664739b7ebdfb4e32e680a0d4716848c0d6ef7faf098fbe3e5409bd65c5a571"
+    },
+    "registerPolicy.bzkir": {
+      "type": "file",
+      "size": 487,
+      "hash": "d88eaf72e0a69bea6219ecb11a004e25e1f1e8292e9a42ae8ded07b21c58be0a"
+    },
+    "registerPolicy.zkir": {
+      "type": "file",
+      "size": 8230,
+      "hash": "3dc6da3a257347d2778b2ad3418fa64efa68ca00d315c15ec846689e9072e643"
+    }
+  },
+  "keys": {
+    "type": "directory",
+    "getPolicy.prover": {
+      "type": "file",
+      "size": 279640,
+      "hash": "4fb04aeeb9674c1b21d2d8b2044c7cbafeb8f9eb9c5071e27e1272bd4a217f8c"
+    },
+    "getPolicy.verifier": {
+      "type": "file",
+      "size": 1351,
+      "hash": "861b341149c92b39edd889323ad066565aee38ea11c8c23ece63665c91a69e13"
+    },
+    "isRegistered.prover": {
+      "type": "file",
+      "size": 147145,
+      "hash": "099f3b77a0408fd5d7c68e90562d17af52ce5ad4c1c2fd5f837265647a134641"
+    },
+    "isRegistered.verifier": {
+      "type": "file",
+      "size": 1351,
+      "hash": "88f8a4ab5803f25579694a679319f46e23f73f7e05ebd9e66bdbd7873d64aca9"
+    },
+    "registerPolicy.prover": {
+      "type": "file",
+      "size": 1071244,
+      "hash": "63ee02ce2c31c88086edeafd4f7513e89280d5fb6846273e948343d696d8fc27"
+    },
+    "registerPolicy.verifier": {
+      "type": "file",
+      "size": 1351,
+      "hash": "2b23c14cd4b03b18fcce502f7e1bcf57e7dfcaa66e8f75e5177fdbf7699f97eb"
+    }
+  }
+}

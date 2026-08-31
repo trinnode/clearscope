@@ -1,0 +1,56 @@
+// ClearScope Age Threshold Policy (v1)
+// Checks whether a credential holder is older than a specified age threshold.
+// Only the boolean result is shared; the date of birth itself is never disclosed.
+//
+// Private input: Date of birth (via witness)
+// Public input:  Age threshold N (Uint<16>)
+// Public output: PASS if holder is older than N, FAIL otherwise
+
+pragma language_version 0.25;
+
+import CompactStandardLibrary;
+
+enum PolicyResult {
+  PASS,
+  FAIL,
+  INSUFFICIENT_SCOPE
+}
+
+// Witness to get the holder's date of birth from private state
+// The implementation is provided by the TypeScript driver
+witness holderDateOfBirth(): Opaque<"string">;
+
+// Public ledger fields for this policy
+export ledger policyId: Bytes<32>;
+export ledger policyVersion: Bytes<16>;
+
+constructor() {
+  policyId = disclose(pad(32, "age-threshold-v1"));
+  policyVersion = disclose(pad(16, "1.0.0"));
+}
+
+// The main evaluation circuit
+export circuit evaluateAgeThreshold(
+  threshold: Uint<16>
+): PolicyResult {
+  // Get the date of birth from private state via witness
+  const dateOfBirth = holderDateOfBirth();
+  const age = witnessAgeFromDOB(dateOfBirth);
+
+  // No date of birth available (witness reports age 0 as sentinel)
+  const hasDate = disclose(age != 0);
+  if (hasDate == false) {
+    return disclose(PolicyResult.INSUFFICIENT_SCOPE);
+  }
+
+  // Boundary case: must be strictly older than N
+  const isOlder = disclose(age > threshold);
+  if (isOlder) {
+    return disclose(PolicyResult.PASS);
+  }
+
+  return disclose(PolicyResult.FAIL);
+}
+
+// Helper circuit to get age from DOB (witness callback)
+witness witnessAgeFromDOB(dob: Opaque<"string">): Uint<16>;

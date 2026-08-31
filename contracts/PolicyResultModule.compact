@@ -1,0 +1,13 @@
+// ClearScope Policy Result Enum
+// Shared across all disclosure policies
+// This enum defines the three possible outcomes of a policy evaluation.
+
+pragma language_version 0.25;
+
+module PolicyResultModule {
+  export enum PolicyResult {
+    PASS,
+    FAIL,
+    INSUFFICIENT_SCOPE
+  }
+}

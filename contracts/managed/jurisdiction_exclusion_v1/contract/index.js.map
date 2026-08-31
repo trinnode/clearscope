@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "../../../",
+  "sources": ["policies/jurisdiction_exclusion_v1.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EA0BA;;;;;;;;;;;;;;;;MAQA,AAAA,6BAsBC;;;;;cArBC,uBAAuC;;;;;;;;;;;yCAAvC,uBAAuC;;;;;;;;;qEAAvC,uBAAuC;;;;OAqBxC;;;;;;GA3BA;EAHD;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAHA;;;;;;;;;yEAAkC;IAClC;;;;;;;;;yEAAuC;IAGrC;;;;;;;;;yEAAQ;IACR;;;;;;;;;yEAAa;;;;;;;GACd;EATD,AAAA,qBAAuC;;0DAAvC,kBAAuC;;;;;;;;;;;;;;GAAA;EAcvC,AAAA,sCAsBC;;yCArBC,uBAAuC;;UAGjC,cAAmC;UAGnC,iBAAsD,kBAA3B,cAAY;;QACzC,iBAAe;;;YAOb,YAAiF;;yDAArC,cAAY;yDAAE,uBAAqB;UAEjF,YAAU;;GAKf;EAGD,AAAA,wBAGW,4BAFT,cAAsB,EACtB,UAA0B;;;0DAF5B,qBAGW;gFAFT,cAAsB;gFACtB,UAA0B;;;;;;;;;;;;;;GACjB;;;;;;;;;;;;;;;;;;;;IAvCX;qCAAA;;;;;;;;;;;0GAAkC;KAAA;IAClC;qCAAA;;;;;;;;;;;0GAAuC;KAAA;;;;;;;;;;;;;;;"
+}

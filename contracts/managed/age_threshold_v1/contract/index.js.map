@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.js",
+  "sourceRoot": "../../../",
+  "sources": ["policies/age_threshold_v1.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;EA0BA;;;;;;;;;;;;;;;;MAMA,AAAA,oBAoBC;;;;;cAnBC,WAAmB;;;;;;;;;;;;;;;;;;yCAAnB,WAAmB;;;;;;;;;4DAAnB,WAAmB;;;;OAmBpB;;;;;;GAvBA;EAHD;;;;;;;;;;;;;;;;;;;;;;;;;;;;;IAHA;;;;;;;;;yEAAkC;IAClC;;;;;;;;;yEAAuC;IAGrC;;;;;;;;;yEAAQ;IACR;;;;;;;;;yEAAa;;;;;;;GACd;EATD,AAAA,oBAA8C;;0DAA9C,iBAA8C;;;;;;;GAAA;EAY9C,AAAA,6BAoBC,4BAnBC,WAAmB;UAGb,aAAiC;UACjC,KAAoC;;4CAAZ,aAAW;UAGnC,SAA4B,GAAT,KAAG;QACxB,SAAO;;;YAKL,SAAmC,GAAhB,KAAG,GAAG,WAAS;UACpC,SAAO;;GAKZ;EAGD,AAAA,oBAA2D,4BAAjC,KAAqB;;0DAA/C,iBAA2D;4EAAjC,KAAqB;;;;;;;;;;;;;;GAAY;;;;;;;;;;;;;;;;IAhC3D;qCAAA;;;;;;;;;;;0GAAkC;KAAA;IAClC;qCAAA;;;;;;;;;;;0GAAuC;KAAA;;;;;;;;;;;;;;;"
+}
