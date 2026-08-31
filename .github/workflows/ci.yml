@@ -40,15 +40,16 @@ jobs:
         run: |
           curl --proto '=https' --tlsv1.2 -LsSf \
             https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh
+          echo "$HOME/.compact/bin" >> $GITHUB_PATH
 
       - name: Verify Compact install
         run: |
-          export PATH="$HOME/.compact/bin:$PATH"
+          compact --version
+          compact update
           compact --version
 
       - name: Compile all contracts
         run: |
-          export PATH="$HOME/.compact/bin:$PATH"
           cd contracts
           compact compile disclosure_request.compact managed/disclosure_request
           compact compile policy_registry.compact managed/policy_registry
